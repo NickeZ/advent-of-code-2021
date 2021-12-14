@@ -31,7 +31,7 @@ fn main() {
         let mut res = init.clone();
         for _ in 0..10 {
             let last = res.as_bytes()[res.len()-1];
-            res = String::from_utf8(res.bytes().tuple_windows().map(|x:(u8, u8)| [x.0, inst[&x]]).flat_map(|x| x).collect::<Vec<u8>>()).unwrap();
+            res = String::from_utf8(res.bytes().tuple_windows().map(|x:(u8, u8)| [x.0, inst[&x]]).flatten().collect::<Vec<u8>>()).unwrap();
             res.push(last as char);
         }
 
