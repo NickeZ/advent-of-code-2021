@@ -109,6 +109,6 @@ fn main() {
     let points = global_errors[0] * 3 + global_errors[1] * 57 + global_errors[2] * 1197 + global_errors[3] * 25137;
     println!("{}", points);
 
-    autocomplete_scores.sort();
+    autocomplete_scores.sort_unstable();
     println!("{}", autocomplete_scores[autocomplete_scores.len()/2])
 }

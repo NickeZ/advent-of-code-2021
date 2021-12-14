@@ -7,7 +7,7 @@ fn main() {
     let mut content = String::new();
     input.read_to_string(&mut content).unwrap();
     {
-        let fishes_init: Vec<u8> = content.trim().split(",").map(str::parse).map(Result::unwrap).collect();
+        let fishes_init: Vec<u8> = content.trim().split(',').map(str::parse).map(Result::unwrap).collect();
 
         let mut fishes: Vec<BigUint> = Vec::new();
         fishes.resize_with(9, || BigUint::from(0u64));

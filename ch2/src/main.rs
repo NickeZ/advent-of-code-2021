@@ -11,18 +11,13 @@ fn main() {
 
     let mut lines = content.split_whitespace();
 
-
-    loop {
-        if let Some(next) = lines.next() {
-            let val = lines.next().unwrap().parse::<i32>().unwrap();
-            match next {
-                "forward" => x += val,
-                "down" => y += val,
-                "up" => y -= val,
-                _ => panic!("invalid token"),
-            }
-        } else {
-            break;
+    while let Some(next) = lines.next() {
+        let val = lines.next().unwrap().parse::<i32>().unwrap();
+        match next {
+            "forward" => x += val,
+            "down" => y += val,
+            "up" => y -= val,
+            _ => panic!("invalid token"),
         }
     }
 
@@ -35,24 +30,20 @@ fn main() {
     let mut lines = content.split_whitespace();
 
 
-    loop {
-        if let Some(next) = lines.next() {
-            let val = lines.next().unwrap().parse::<i32>().unwrap();
-            match next {
-                "forward" => {
-                    x += val;
-                    y += aim*val;
-                },
-                "down" => {
-                    aim += val;
-                },
-                "up" => {
-                    aim -= val;
-                },
-                _ => panic!("invalid token"),
-            }
-        } else {
-            break;
+    while let Some(next) = lines.next() {
+        let val = lines.next().unwrap().parse::<i32>().unwrap();
+        match next {
+            "forward" => {
+                x += val;
+                y += aim*val;
+            },
+            "down" => {
+                aim += val;
+            },
+            "up" => {
+                aim -= val;
+            },
+            _ => panic!("invalid token"),
         }
     }
 

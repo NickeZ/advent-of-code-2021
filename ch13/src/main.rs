@@ -20,19 +20,17 @@ fn main() {
     let mut data = Box::new([[false; SIZE]; SIZE]);
     let mut instructions = VecDeque::new();
     for line in content.trim().split_whitespace() {
-        if line.split(",").count() == 2 {
-            let mut split = line.split(",");
+        if line.split(',').count() == 2 {
+            let mut split = line.split(',');
             let x = split.next().unwrap().parse::<usize>().unwrap();
             let y = split.next().unwrap().parse::<usize>().unwrap();
             data[y][x] = true
-        } else {
-            if line.starts_with("y=") {
-                let y = std::str::from_utf8(&line.as_bytes()[2..]).unwrap().parse::<usize>().unwrap();
-                instructions.push_back((FoldType::Horizontal, y))
-            } else if line.starts_with("x=") {
-                let x = std::str::from_utf8(&line.as_bytes()[2..]).unwrap().parse::<usize>().unwrap();
-                instructions.push_back((FoldType::Vertical, x))
-            }
+        } else if line.starts_with("y=") {
+            let y = std::str::from_utf8(&line.as_bytes()[2..]).unwrap().parse::<usize>().unwrap();
+            instructions.push_back((FoldType::Horizontal, y))
+        } else if line.starts_with("x=") {
+            let x = std::str::from_utf8(&line.as_bytes()[2..]).unwrap().parse::<usize>().unwrap();
+            instructions.push_back((FoldType::Vertical, x))
         }
     }
 

@@ -58,13 +58,13 @@ impl Board {
                 return true;
             }
         }
-        return false;
+        false
     }
 }
 
 fn parse_drawn(input: &str) -> Vec<u8> {
     input
-        .split(",")
+        .split(',')
         .map(str::parse)
         .map(Result::unwrap)
         .collect()
@@ -77,10 +77,10 @@ fn parse_boards<'a>(
 
     loop {
         let mut nums = [[0; 5]; 5];
-        for i in 0..5 {
-            for j in 0..5 {
+        for row in &mut nums {
+            for cell in row.iter_mut() {
                 if let Some(num) = input.next() {
-                    nums[i][j] = num.parse()?;
+                    *cell = num.parse()?;
                 } else {
                     return Ok(boards);
                 }
@@ -96,7 +96,7 @@ fn any_won(boards: &[Board]) -> Option<usize> {
             return Some(i);
         }
     }
-    return None;
+    None
 }
 
 fn winners(boards: &[Board], removed: &[bool]) -> Vec<usize> {
@@ -106,18 +106,18 @@ fn winners(boards: &[Board], removed: &[bool]) -> Vec<usize> {
             res.push(i);
         }
     }
-    return res;
+    res
 }
 
 fn last_winner(boards: &[Board], removed: &mut [bool]) -> Option<usize> {
-    for won in winners(&boards, &removed) {
+    for won in winners(boards, removed) {
         if removed.iter().filter(|x| **x).count() < boards.len() - 1 {
             removed[won] = true;
         } else {
             return Some(won)
         }
     }
-    return None
+    None
 }
 
 fn main() {

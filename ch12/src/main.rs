@@ -79,7 +79,7 @@ fn visit(g: &Graph, n: usize, history: &mut VecDeque<usize>, counter: &mut u32) 
     history.push_back(n);
 
     for adj in g.get_adjacent(n) {
-        if history.iter().find(|x|*x == adj).is_none() || g.node(*adj).typ == NodeType::Large {
+        if !history.iter().any(|x|x == adj) || g.node(*adj).typ == NodeType::Large {
             visit(g, *adj, history, counter)
         }
     }
@@ -99,7 +99,7 @@ fn visit2(g: &Graph, n: usize, history: &mut VecDeque<usize>, counter: &mut u32)
         match g.node(*adj).typ {
             NodeType::Start => continue,
             NodeType::End  => {
-                if history.iter().find(|x| *x == adj).is_some() {
+                if history.iter().any(|x| x == adj) {
                     continue
                 }
             },
@@ -109,7 +109,7 @@ fn visit2(g: &Graph, n: usize, history: &mut VecDeque<usize>, counter: &mut u32)
                     *counter += 1;
                     map
                 });
-                if map.values().find(|v| **v == 2).is_some() && history.iter().find(|x| *x == adj).is_some() {
+                if map.values().any(|v| *v == 2) && history.iter().any(|x| x == adj) {
                     continue
                 }
             },
@@ -128,7 +128,7 @@ fn main() {
 
     let mut g = Graph::new();
     for line in content.trim().split_whitespace() {
-        let mut iter = line.split("-");
+        let mut iter = line.split('-');
         let (a, b) = (iter.next().unwrap(), iter.next().unwrap());
         g.add_node(a);
         g.add_node(b);

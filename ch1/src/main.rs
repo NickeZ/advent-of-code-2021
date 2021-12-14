@@ -11,7 +11,7 @@ fn main() {
         .split_whitespace()
         .map(|s| s.parse::<usize>().unwrap())
         .tuple_windows()
-        .filter(|(a, b)| if b > a { true } else { false })
+        .filter(|(a, b)| b > a)
         .count();
     println!("{}", count);
 
@@ -20,13 +20,7 @@ fn main() {
         .map(|s| s.parse::<usize>().unwrap())
         .tuple_windows()
         .tuple_windows()
-        .filter(|((a1, a2, a3), (b1, b2, b3))| {
-            if b1 + b2 + b3 > a1 + a2 + a3 {
-                true
-            } else {
-                false
-            }
-        })
+        .filter(|((a1, a2, a3), (b1, b2, b3))| b1 + b2 + b3 > a1 + a2 + a3)
         .count();
     println!("{}", count);
 }

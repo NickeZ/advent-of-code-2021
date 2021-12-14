@@ -83,7 +83,7 @@ fn parse_coor<'a>(tokens: &mut impl Iterator<Item=&'a str>) -> Result<Option<(u3
     let Some(coor) = tokens.next() else {
         return Ok(None)
     };
-    let mut coor = coor.split(",");
+    let mut coor = coor.split(',');
     let Some(x) = coor.next() else {
         return Ok(None)
     };

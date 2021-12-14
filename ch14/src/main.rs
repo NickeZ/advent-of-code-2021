@@ -13,7 +13,7 @@ fn main() {
     let (init, inst) = {
         let mut init = String::new();
         let mut inst = HashMap::new();
-        for (i, line) in content.trim().split("\n").enumerate() {
+        for (i, line) in content.trim().split('\n').enumerate() {
             if i == 0 {
                 init = line.to_string();
             } else if i == 1 {
@@ -60,14 +60,14 @@ fn main() {
 
         for _ in 0..40 {
             char_counts = pair_counts.iter().fold(char_counts, |mut acc, (k, v)| {
-                let counter = acc.entry(inst[&k]).or_default();
+                let counter = acc.entry(inst[k]).or_default();
                 *counter += v;
                 acc
             });
             pair_counts = pair_counts.iter().fold(HashMap::new(), |mut acc, (k, v)| {
-                let counter = acc.entry((k.0, inst[&k])).or_default();
+                let counter = acc.entry((k.0, inst[k])).or_default();
                 *counter += v;
-                let counter = acc.entry((inst[&k], k.1)).or_default();
+                let counter = acc.entry((inst[k], k.1)).or_default();
                 *counter += v;
                 acc
             });

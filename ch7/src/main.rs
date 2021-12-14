@@ -5,7 +5,7 @@ fn main() {
     let mut content = String::new();
     input.read_to_string(&mut content).unwrap();
     {
-        let heights = content.trim().split(",").map(str::parse).map(Result::unwrap).collect::<Vec<u32>>();
+        let heights = content.trim().split(',').map(str::parse).map(Result::unwrap).collect::<Vec<u32>>();
         let max = heights.iter().copied().reduce(u32::max).unwrap();
         let mut best_height_cost = u32::max_value();
         for i in 0..max {
@@ -20,7 +20,7 @@ fn main() {
     }
 
     {
-        let heights = content.trim().split(",").map(str::parse).map(Result::unwrap).collect::<Vec<u32>>();
+        let heights = content.trim().split(',').map(str::parse).map(Result::unwrap).collect::<Vec<u32>>();
         let max = heights.iter().copied().reduce(u32::max).unwrap();
         let mut best_height_cost = u32::max_value();
         for i in 0..max {

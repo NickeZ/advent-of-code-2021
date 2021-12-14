@@ -24,11 +24,11 @@ fn main() {
         let mut gamma = 0u32;
         let mut epsilon = 0u32;
 
-        for i in 0..ones.len() {
+        for item in ones {
             gamma <<= 1;
             epsilon <<= 1;
-            gamma += if ones[i] > count/2 {1} else {0};
-            epsilon += if ones[i] > count/2 {0} else {1};
+            gamma += if item > count/2 {1} else {0};
+            epsilon += if item > count/2 {0} else {1};
         }
 
         println!("{}", gamma*epsilon);
@@ -69,10 +69,8 @@ fn main() {
                     if line.as_bytes()[pos] == b'0' {
                         index_ox[i] = false;
                     }
-                } else {
-                    if line.as_bytes()[pos] == b'1' {
-                        index_ox[i] = false;
-                    }
+                } else if line.as_bytes()[pos] == b'1' {
+                    index_ox[i] = false;
                 }
             }
             if total_co2 > 1 {
@@ -80,10 +78,8 @@ fn main() {
                     if line.as_bytes()[pos] == b'1' {
                         index_co2[i] = false;
                     }
-                } else {
-                    if line.as_bytes()[pos] == b'0' {
-                        index_co2[i] = false;
-                    }
+                } else if line.as_bytes()[pos] == b'0' {
+                    index_co2[i] = false;
                 }
             }
         }

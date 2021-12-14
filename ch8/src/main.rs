@@ -11,8 +11,8 @@ fn main() {
         let mut four_count = 0;
         let mut seven_count = 0;
         let mut eight_count = 0;
-        for line in content.trim().split("\n") {
-            let right = line.split("|").nth(1).unwrap();
+        for line in content.trim().split('\n') {
+            let right = line.split('|').nth(1).unwrap();
             let word_sizes = right.split_whitespace().map(str::len);
             for size in word_sizes {
                 match size {
@@ -28,12 +28,12 @@ fn main() {
     }
     {
         let mut sum = 0u32;
-        for line in content.trim().split("\n") {
-            let left = line.split("|").next().unwrap().split_whitespace().map(|s| HashSet::from_iter(s.chars())).collect::<Vec<HashSet<_>>>();
+        for line in content.trim().split('\n') {
+            let left = line.split('|').next().unwrap().split_whitespace().map(|s| HashSet::from_iter(s.chars())).collect::<Vec<HashSet<_>>>();
             let integers = find_encoding(left);
 
             let mut code = String::new();
-            let right = line.split("|").nth(1).unwrap();
+            let right = line.split('|').nth(1).unwrap();
             for num in right.split_whitespace().map(|s| HashSet::from_iter(s.chars())) {
                 let i = integers.iter().enumerate().find(|x| x.1 == &num).unwrap();
                 code.push_str(&i.0.to_string())
@@ -44,7 +44,7 @@ fn main() {
     }
 }
 
-fn find_encoding<'a>(left: Vec<HashSet<char>>) -> [HashSet<char>; 10] {
+fn find_encoding(left: Vec<HashSet<char>>) -> [HashSet<char>; 10] {
     let mut integers: [HashSet<char>; 10] = Default::default();
     for s in &left {
         // find 1
