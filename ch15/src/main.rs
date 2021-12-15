@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::Read;
-use std::collections::VecDeque;
+use std::collections::BinaryHeap;
+use std::cmp::Reverse;
 
 struct Node {
     x: usize,
@@ -102,7 +103,7 @@ fn main() {
         let mut routes = Vec::new();
         routes.resize_with(g.width as usize * g.height() as usize, || None);
         routes[0] = Some(0);
-        bfs(&g, start, &mut routes);
+        djikstra(&g, start, &mut routes);
 
         println!("{}", routes[routes.len()-1].unwrap());
     }
@@ -147,34 +148,30 @@ fn main() {
 
         let start = g.node_by_position(0, 0);
         let mut routes = Vec::new();
-        let mut routes_old = Vec::new();
         routes.resize_with(g.width as usize * g.height() as usize, || None);
         routes[0] = Some(0);
 
-        while routes_old != routes {
-            routes_old = routes.clone();
-            bfs(&g, start, &mut routes);
-            // After a few iterations we reach the right value.
-            println!("{}", routes[routes.len()-1].unwrap());
-        }
-
-        //println!("{}", routes[routes.len()-1].unwrap());
+        djikstra(&g, start, &mut routes);
+        println!("{}", routes[routes.len()-1].unwrap());
     }
 
 }
 
-fn bfs(g: &Graph, start: usize, routes: &mut Vec<Option<u32>>) {
-    let mut q = VecDeque::new();
+fn djikstra(g: &Graph, start: usize, routes: &mut Vec<Option<u32>>) {
+    let mut q = BinaryHeap::new();
     let mut visited = Vec::new();
     visited.resize_with(g.width as usize * g.height() as usize, || false);
 
-    q.push_back(start);
-    while let Some(next) = q.pop_front() {
+    q.push((Reverse(g.node(start).cost), start));
+    while let Some((_, next)) = q.pop() {
         visit(g, next, routes, &mut visited, &mut q);
+        if routes[routes.len()-1].is_some() {
+            break;
+        }
     }
 }
 
-fn visit(g: &Graph, node: usize, routes: &mut Vec<Option<u32>>, visited: &mut Vec<bool>, q: &mut VecDeque<usize>) {
+fn visit(g: &Graph, node: usize, routes: &mut Vec<Option<u32>>, visited: &mut Vec<bool>, q: &mut BinaryHeap<(Reverse<u32>, usize)>) {
     // We set the cost of every node before visiting it, so unwrap can't panic.
     let current_cost = routes[node].unwrap();
 
@@ -189,15 +186,14 @@ fn visit(g: &Graph, node: usize, routes: &mut Vec<Option<u32>>, visited: &mut Ve
         } else {
             routes[*adj] = Some(current_cost + adj_cost);
         }
-    }
-    for adj in g.get_adjacent(node) {
-        if !visited[*adj] && !q.iter().any(|x| x == adj) {
-            q.push_back(*adj)
+        if !visited[*adj] && !q.iter().any(|x| x == &(Reverse(routes[*adj].unwrap()), *adj)) {
+            q.push((Reverse(routes[*adj].unwrap()), *adj))
         }
     }
 }
 
-fn print_routes(routes: &Vec<Option<u32>>, width: u32) {
+#[allow(dead_code)]
+fn print_routes(routes: &[Option<u32>], width: u32) {
     for (i, r) in routes.iter().enumerate() {
         if let Some(r) = r {
             print!("{:3} ", r);
@@ -211,6 +207,7 @@ fn print_routes(routes: &Vec<Option<u32>>, width: u32) {
     println!();
 }
 
+#[allow(dead_code)]
 fn print_graph(g: &Graph) {
     for (i, r) in g.nodes.iter().enumerate() {
         print!("{}", r.cost);
