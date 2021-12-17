@@ -13,7 +13,7 @@ fn main() {
     let mut split = content.split_whitespace();
     let _ = split.next().unwrap();
     let _ = split.next().unwrap();
-    let x_range = split.next().unwrap().trim_end_matches(",");
+    let x_range = split.next().unwrap().trim_end_matches(',');
     let y_range = split.next().unwrap();
 
     let mut x_range = std::str::from_utf8(&x_range.as_bytes()[2..]).unwrap().split("..");
@@ -40,7 +40,7 @@ fn main() {
     }
     println!("{:?}", set.iter().max_by_key(|(_, _, max_y)| max_y).unwrap());
 
-    println!("{:?}", set.iter().count());
+    println!("{:?}", set.len());
 }
 
 fn is_good(init_vx: i32, init_vy: i32, xrange: &std::ops::RangeInclusive<i32>, yrange: &std::ops::RangeInclusive<i32>) -> (bool, i32) {
